@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="APIGateway/APIGateway.csproj" />
+  <Project Path="CommonAppUtils/CommonAppUtils.csproj" Id="5ba714c6-8845-4332-bb7d-a21a3ce4e4fb" />
   <Project Path="FirstService/FirstService.csproj" />
   <Project Path="SecondService/SecondService.csproj" />
 </Solution>

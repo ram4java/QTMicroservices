@@ -1,3 +1,39 @@
 {
-
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Hello/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7100
+        }
+      ],
+      "UpstreamPathTemplate": "/Hello/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Key": "HelloService"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Greetings/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7200
+        }
+      ],
+      "UpstreamPathTemplate": "/Greetings/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Key": "GreetingsService"
+    }
+  ],
+  "Aggregates": [
+    {
+      "RouteKeys": [ "HelloService", "GreetingsService" ],
+      "UpstreamPathTemplate": "/callBothServices"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7000"
+  }  
 }
