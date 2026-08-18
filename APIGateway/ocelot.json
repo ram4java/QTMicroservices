@@ -7,11 +7,27 @@
         {
           "Host": "localhost",
           "Port": 7100
+        },
+        {
+          "Host": "localhost",
+          "Port": 7120
+        },
+        {
+          "Host": "localhost",
+          "Port": 7130
         }
       ],
       "UpstreamPathTemplate": "/Hello/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "Key": "HelloService"
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "60s",
+        "PeriodTimespan": 30,
+        "Limit": 10,
+        "ClientIdHeader": "X-Client-ID",
+        "QuotaExceededMessage": "Limit to make no of calls is reached"
+      }
     },
     {
       "DownstreamPathTemplate": "/api/Greetings/{everything}",
@@ -23,7 +39,46 @@
         }
       ],
       "UpstreamPathTemplate": "/Greetings/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/minimal/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7200
+        }
+      ],
+      "UpstreamPathTemplate": "/GreetingsMinimal/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+
+    // --- Static Routes for Aggregation with key ---
+    {
+      "DownstreamPathTemplate": "/api/Hello",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7100
+        }
+      ],
+      "UpstreamPathTemplate": "/HelloBaseInternal",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Key": "HelloService"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Greetings",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7200
+        }
+      ],
+      "UpstreamPathTemplate": "/GreetingsBaseInternal",
+      "UpstreamHttpMethod": [ "GET" ],
       "Key": "GreetingsService"
     }
   ],
